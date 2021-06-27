@@ -1,20 +1,28 @@
 package com.webApp.webApp.student;
 
+import com.webApp.webApp.services.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("students")
 public class StudentController {
 
+
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+
     @GetMapping
     List <Student> getAllStudents() {
-        return List.of(new Student("kashis","thakur",Student.Gender.MALE, UUID.randomUUID(), "kt@go.co"),
-                new Student("Pintu", "Oberoy", Student.Gender.MALE, UUID.randomUUID(), "p@po.co")
-        );
+        return studentService.getAllStudents();
     }
 }
